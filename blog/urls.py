@@ -16,17 +16,25 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
+from blogs.views import RegisterView,BlogDetailView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
 
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title='Pastebin API')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/v1/users/register/', RegisterView.as_view()),
+    path('api/v1/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-token-auth/', obtain_auth_token),
-    path('blogs/', include('blogs.urls')),
+    path('blogs/<int:pk>/', BlogDetailView.as_view()),
+    path('api/v1/blogs/', include('blogs.urls')),
+    path('swagger/', schema_view)
 
 ]

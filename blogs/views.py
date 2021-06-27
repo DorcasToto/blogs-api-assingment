@@ -14,6 +14,9 @@ from rest_framework.views import APIView
 # Create your views here.
 
 class RegisterView(GenericAPIView):
+    """
+    registers a user to the database
+    """
     serializer_class = UserSerializer
     queryset = User.objects.all()
     
@@ -25,32 +28,10 @@ class RegisterView(GenericAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class LoginView(GenericAPIView):
-    serializer_class = LoginSerializer
-
-    def post(self, request):
-        data = request.data
-        username = data.get('username', '')
-        password = data.get('password', '')
-        user = auth.authenticate(username=username, password=password)
-
-        if user:
-            auth_token = jwt.encode(
-                {'username': user.username}, settings.JWT_SECRET_KEY, algorithm="HS256")
-
-            serializer = UserSerializer(user)
-
-            data = {'user': serializer.data, 'token': auth_token}
-
-            return Response(data, status=status.HTTP_200_OK)
-
-            # SEND RES
-        return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+ 
 class BlogList(APIView):
     """
-    List all snippets, or create a new snippet.
+    List all blogs, or create a new blog.
     """
     def get(self, request, format=None):
         blogs = Blog.objects.all()
