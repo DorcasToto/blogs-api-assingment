@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
-from blogs.views import RegisterView,BlogDetailView
+from blogs.views import RegisterView
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -33,7 +33,6 @@ urlpatterns = [
     path('api/v1/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api-token-auth/', obtain_auth_token),
-    path('blogs/<int:pk>/', BlogDetailView.as_view()),
     path('api/v1/blogs/', include('blogs.urls')),
     path('swagger/', schema_view)
 
