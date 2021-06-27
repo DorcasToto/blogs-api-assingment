@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_swagger',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -80,9 +81,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'blog.wsgi.application'
 
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -153,20 +153,13 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'blogs.backends.JWTAuthentication',
+       'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
-
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+     
 }
-JWT_SECRET_KEY='jt%h)244y2usko7kgp545az)@2i_y21p4r%q7^k7(+oyhh04wj'
-APPEND_SLASH = False
-CORS_ALLOW_ALL_ORIGINS = True
-
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
-
-ALLOWED_HOSTS = ['blogassingment.herokuapp.com']

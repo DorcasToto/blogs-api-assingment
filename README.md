@@ -36,6 +36,7 @@ An application that displays all the blogs to users
 
 # Screenshots
 
+[Endpoints](https://docs.google.com/document/d/1H2RrnQErM1_fXWAkNcYlfvkuLIJHqXMZYqG1giGUs7c/edit)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/DorcasToto/Neighborhood-Frontend/blob/master/LICENSE)
 

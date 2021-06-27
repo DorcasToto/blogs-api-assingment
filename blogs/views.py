@@ -3,6 +3,7 @@ from rest_framework.generics import GenericAPIView
 from .serializers import UserSerializer, LoginSerializer, BlogSerializer
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
 from rest_framework import status
 from .models import User, Blog
@@ -39,6 +40,7 @@ class BlogList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        permission_classes = [IsAuthenticated]
         serializer = BlogSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -46,7 +48,7 @@ class BlogList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BlogDetailView(APIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = [IsAuthenticated]
     """
     Retrieve, update or delete a snippet instance.
     """
